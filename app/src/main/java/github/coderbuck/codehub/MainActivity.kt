@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import github.coderbuck.codehub.api.Api
+import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -15,7 +16,14 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         showToast("开始请求")
-        request()
+//        request()
+
+        val html = assets.open("coderbuck.html").reader().buffered().use {
+            it.readText()
+        }
+        val graph = HtmlParser.getGraph(html)
+        graphView.commitGraphBean = graph
+
     }
 
     fun request() {
@@ -27,13 +35,16 @@ class MainActivity : AppCompatActivity() {
 
             override fun onResponse(call: Call<String?>, response: Response<String?>) {
                 showToast("请求成功")
-                val body = response.body()
-                if (body == null) {
+                val html = response.body()
+                if (html == null) {
                     showToast("body == null")
                     return
                 }
+                val graphBean = HtmlParser.getGraph(html)
+                val size = graphBean.columns[1].cells.size
+                println("gwf: size = " + size)
 
-                println(body)
+                graphView.commitGraphBean = graphBean
             }
         })
     }
