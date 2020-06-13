@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.apollographql.apollo'
 
 android {
     compileSdkVersion 29
@@ -26,8 +27,17 @@ android {
         sourceCompatibility = 1.8
         targetCompatibility = 1.8
     }
+
+    kotlinOptions {
+        jvmTarget = 1.8
+    }
+
     viewBinding {
         enabled = true
+    }
+
+    apollo {
+        generateKotlinModels.set(true) // or false for Java models
     }
 
 }
@@ -43,6 +53,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.8.1'
     implementation 'com.squareup.retrofit2:converter-scalars:2.8.1'
     implementation 'org.jsoup:jsoup:1.13.1'
+    implementation 'com.apollographql.apollo:apollo-runtime:2.2.0'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'

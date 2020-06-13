@@ -7,6 +7,7 @@ import android.graphics.Paint
 import android.graphics.Rect
 import android.util.AttributeSet
 import android.view.View
+import androidx.core.content.ContextCompat
 import github.coderbuck.codehub.R
 import github.coderbuck.codehub.bean.CommitGraphBean
 
@@ -35,7 +36,7 @@ class GraphView : View {
     ) : super(context, attrs, defStyleAttr, defStyleRes)
 
     init {
-        paint.color = resources.getColor(R.color.colorAccent)
+        paint.color = ContextCompat.getColor(context,R.color.colorAccent)
         paint.strokeWidth = 2f
         paint.style = Paint.Style.FILL_AND_STROKE
     }
@@ -49,8 +50,6 @@ class GraphView : View {
 
         val scale = (width - 100).toFloat() / graphBean.width
         canvas.scale(scale, scale)
-        println("gwf: onDraw")
-
         // 外边框
         paint.style = Paint.Style.STROKE
         rect.set(0, 0, graphBean.width, graphBean.height)
@@ -65,15 +64,7 @@ class GraphView : View {
             columnBean.cells.forEach { cell ->
                 rect.set(0, 0, cell.width, cell.height)
                 rect.offset(pdx + pdx1, pdy + pdy1 + cell.y)
-                if (cell.data_date.equals("2020-04-18")) {
-                    println("ggg: cell = " + cell)
-                    println("ggg: pdx = $pdx, pdx1 = $pdx1, pdy = $pdy, pdy1 = $pdy1," + cell)
-                }
-
                 paint.color = Color.parseColor(cell.fill)
-                if (rect.bottom > graphBean.height) {
-                    println("gwf : rect.bottom = ${rect.bottom} > graphBean.height = ${graphBean.height} columnBean = ${cell.data_date} " + cell)
-                }
                 canvas.drawRect(rect, paint)
             }
         }

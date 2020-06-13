@@ -3,7 +3,6 @@ package github.coderbuck.codehub
 import github.coderbuck.codehub.bean.*
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
-import java.io.InputStream
 
 object HtmlParser {
 

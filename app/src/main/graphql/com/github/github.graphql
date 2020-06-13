@@ -1,0 +1,17 @@
+
+query GetPinnedRepos{
+    user(login:"coderbuck") {
+        pinnedItems(first:10, types: [REPOSITORY]) {
+            totalCount
+            edges {
+                node {
+                    ... on Repository {
+                        name
+                    }
+                }
+            }
+        }
+    }
+}
+
+
