@@ -54,7 +54,7 @@ class GithubActivity : AppCompatActivity() {
 
             override fun intercept(chain: Interceptor.Chain?): Response {
                 return chain!!.proceed(
-                    chain.request().newBuilder().header("Authorization", "Bearer 344a2a08360103be80fb25b6b574b512139fd3d9").build()
+                    chain.request().newBuilder().header("Authorization", "Bearer xxx").build()
                 )
             }
         }
